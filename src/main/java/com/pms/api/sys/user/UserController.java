@@ -1,57 +1,72 @@
 package com.pms.api.sys.user;
 
-import com.pms.api.common.security.CookieUtils;
 import com.pms.api.common.web.ResponseResult;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Objects;
+
+import org.springframework.security.core.AuthenticationException;
+
 @RestController
-@RequestMapping("/account")
+@RequestMapping("user")
 public class UserController {
-  @Autowired
   private UserService userService;
 
-  @RequestMapping(value = "getUsers")
-  public List<User> getUsers(String id) {
-    User user = new User();
-    user.setName("luo");
+  @Bean
+  public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  UserController(UserService userService) {
+    this.userService = userService;
+  }
+  @ResponseBody
+  @PostMapping(value = "getUsers")
+  public List<User> getUsers(@RequestBody User user) {
     return userService.findList(user);
   }
 
 
   @ResponseBody
   @PostMapping("login")
-  public ResponseResult login(@RequestBody User user) {
-    if(user.getPassword() == null || "".equals(user.getPassword())) {
-      return ResponseResult.failure("请输入密码");
-    }
+  public ResponseResult login(@RequestBody User user, HttpServletResponse httpResponse) throws Exception{
     User loadUser = userService.getUserByUsername(user.getUsername());
     if (loadUser == null) {
-      return ResponseResult.failure("找不到该用户");
+     return ResponseResult.failure("用户不存在");
     }
-    if (!user.getPassword().equals(loadUser.getPassword())) {
+    String token = userService.login(user.getUsername(), user.getPassword());
+    if (token != null && !token.equals("")) {
+      loadUser.setToken(token);
+      ResponseResult result = ResponseResult.defaultSuccess();
+      result.setData(loadUser);
+      return result;
+    } else {
       return ResponseResult.failure("密码错误");
     }
+  }
+
+  @ResponseBody
+  @PostMapping("register")
+  public ResponseResult register(@RequestBody User user, HttpServletResponse httpResponse) throws Exception{
     ResponseResult result = ResponseResult.defaultSuccess();
-    result.setData(loadUser);
-    return result;
+    String data =  userService.register(user);
+    result.setData(data);
+    return ResponseResult.defaultSuccess();
   }
 
 
-  final String TOKENX = "1234";
-
-  @ResponseBody
-  @PostMapping("login2")
-  public String queryPoolList(@RequestBody User user, HttpServletResponse response,
-      @CookieValue(value = "token", required = false) String token) {
-    if (token == null) {
-      CookieUtils.writeCookie(response, "token", TOKENX);
-    } else {
-      System.out.println(token);
-    }
-    //返回前台
-    return "成功";
+  /**
+   * 刷新密钥
+   *
+   * @param authorization 原密钥
+   * @return 新密钥
+   * @throws AuthenticationException 错误信息
+   */
+  @GetMapping(value = "/refreshToken")
+  public String refreshToken(@RequestHeader String authorization) throws AuthenticationException {
+    return userService.refreshToken(authorization);
   }
 }

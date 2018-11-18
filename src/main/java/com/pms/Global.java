@@ -12,8 +12,6 @@ import java.util.Map;
  * 全局配置类
  */
 @Component
-@ConfigurationProperties(prefix = "config")
-@PropertySource(value = "classpath:config/config.properties")
 public class Global {
 
 	/**
@@ -40,7 +38,7 @@ public class Global {
 	public static final String FALSE = "false";
 
 
-	private String pageSize;
+	private String pageSize = "10";
 
 	public static Global getGlob() {
 		return global;

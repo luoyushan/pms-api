@@ -1,15 +1,20 @@
 package com.pms.api.sys.user;
 
 import com.pms.api.common.persistence.Entity;
+import com.pms.api.sys.office.Office;
+import com.pms.api.sys.role.Role;
+
 import java.util.Date;
+import java.util.List;
 
 public class User extends Entity<User> {
-  private String companyId;	// 归属公司
-  private String deptId;	// 归属部门
+
   private String username;// 登录名
   private String password;// 密码
   private String no;		// 工号
   private String sex;	//性别
+  private Office company;	// 归属公司
+  private Office dept;	// 归属部门
   private String email;	// 邮箱
   private String phone;	// 电话
   private String mobile;	// 手机
@@ -17,21 +22,37 @@ public class User extends Entity<User> {
   private Date loginDate;	// 最后登陆日期
   private String loginFlag;	// 是否允许登陆
   private String photo;	// 头像
-
-  public String getCompanyId() {
-    return companyId;
+  private String token;
+  private List<String> roles; // 角色
+  public User() {
+    super();
+  }
+  public User(String id) {
+    super();
+    this.id = id;
+  }
+  public Office getCompany() {
+    return company;
   }
 
-  public void setCompanyId(String companyId) {
-    this.companyId = companyId;
+  public void setCompany(Office company) {
+    this.company = company;
   }
 
-  public String getDeptId() {
-    return deptId;
+  public Office getDept() {
+    return dept;
   }
 
-  public void setDeptId(String deptId) {
-    this.deptId = deptId;
+  public void setDept(Office dept) {
+    this.dept = dept;
+  }
+
+  public List<String> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(List<String> roles) {
+    this.roles = roles;
   }
 
   public String getUsername() {
@@ -120,6 +141,14 @@ public class User extends Entity<User> {
 
   public void setPhoto(String photo) {
     this.photo = photo;
+  }
+
+  public String getToken() {
+    return token;
+  }
+
+  void setToken(String token) {
+    this.token = token;
   }
 }
 

@@ -43,6 +43,9 @@ public abstract class Entity<T> extends BaseEntity<T> {
     if (user != null && "".equals(user.getId())){
       this.updateBy = user;
       this.createBy = user;
+    } else {
+      this.updateBy = new User("1");
+      this.createBy = new User("1");
     }
     this.updateDate = new Date();
     this.createDate = this.updateDate;
@@ -61,7 +64,7 @@ public abstract class Entity<T> extends BaseEntity<T> {
   }
 
   private User getCurrentUser() {
-    return new User();
+    return new User("1");
   }
   @Length(min=0, max=255)
   public String getRemarks() {
