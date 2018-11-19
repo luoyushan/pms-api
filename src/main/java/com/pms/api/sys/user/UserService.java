@@ -25,26 +25,26 @@ import sun.misc.BASE64Encoder;
 
 @Service
 public class UserService extends BaseService<UserMapper, User> {
-  private UserMapper userDao;
+  private UserMapper mapper;
   private AuthenticationManager authenticationManager;
   private UserDetailsService userDetailsService;
   private JwtTokenUtil jwtTokenUtil;
 
   @Autowired
   UserService(
-      UserMapper userDao,
+      UserMapper mapper,
       AuthenticationManager authenticationManager,
       @Qualifier("jwtUserDetailsServiceImpl") UserDetailsService userDetailsService,
       JwtTokenUtil jwtTokenUtil
   ) {
-    this.userDao = userDao;
+    this.mapper = mapper;
     this.authenticationManager = authenticationManager;
     this.userDetailsService = userDetailsService;
     this.jwtTokenUtil = jwtTokenUtil;
   }
 
  User getUserByUsername(String username) {
-   return userDao.getUserByUsername(username);
+   return mapper.getUserByUsername(username);
   }
   public void save(User user) {
     super.save(user);
@@ -65,7 +65,7 @@ public class UserService extends BaseService<UserMapper, User> {
 
   String register(User user) {
     String username = user.getUsername();
-    if (userDao.getUserByUsername(username) != null) {
+    if (mapper.getUserByUsername(username) != null) {
       return "用户已存在";
     }
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -75,7 +75,7 @@ public class UserService extends BaseService<UserMapper, User> {
     roles.add("ROLE_USER");
     user.setRoles(roles);
     user.preInsert();
-    userDao.insert(user);
+    mapper.insert(user);
     return "success";
   }
 

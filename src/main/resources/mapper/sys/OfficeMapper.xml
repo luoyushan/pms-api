@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pms.api.sys.office.OfficeMapper" >
+  <sql id="columns" >
+    a.id,
+    a.name,
+    a.title,
+    a.remarks,
+    a.create_by as "createBy.id",
+    a.create_date ,
+    a.update_by as "updateBy.id",
+    a.update_date,
+    a.pid,
+    a.sort,
+    a.area_id as "area.id",
+    a.code,
+    a.type,
+    a.address,
+    a.zip_code,
+    a.master,
+    a.phone,
+    a.email,
+    a.tax
+  </sql>
+
+  <sql id="joins">
+    left join sys_user su1 on su.id = a.create_by
+    left join sys_user su2 on su.id = a.update_by
+    left join sys_area sa on sa.id = a.area_id
+  </sql>
+
+  <select id="get" resultType="com.pms.api.sys.office.Office">
+    SELECT
+      <include refid="columns"/>,
+      su1.name as "createBy.name",
+      su2.name as "updateBy.name",
+      sa.name as "area.name"
+    FROM sys_office a
+      <include refid="joins"/>
+    WHERE a.id = #{id}
+  </select>
+
+  <select id="findList" resultType="com.pms.api.sys.office.Office" >
+    SELECT
+      <include refid="columns" />
+    FROM sys_office a
+    <where>
+      <if test="delFlag != null and delFlag != ''">
+        AND a.del_flag = #{delFlag}
+      </if>
+      <if test="delFlag == null or delFlag == ''">
+        AND a.del_flag = #{DEL_FLAG_NORMAL}
+      </if>
+      <if test="name != null and name != ''">
+        AND a.name LIKE '%'||#{name}||'%'
+      </if>
+    </where>
+  </select>
+
+  <insert id="insert">
+    INSERT INTO sys_office(
+      id,
+      name,
+      title,
+      remark,
+      create_by,
+      create_date,
+      update_by,
+      update_date,
+      del_flag,
+      pid,
+      sort,
+      code,
+      type,
+      address,
+      zip_cod,
+      master,
+      phone,
+      email,
+      tax
+    ) VALUES (
+      #{id},
+      #{name},
+      #{title},
+      #{remark},
+      #{createBy.id},
+      #{createDate},
+      #{updateBy.id},
+      #{updateDate},
+      #{delFlag},
+      #{pid},
+      #{sort},
+      #{area.id},
+      #{code},
+      #{type},
+      #{address},
+      #{zip_code},
+      #{master},
+      #{phone},
+      #{email},
+      #{tax}
+    )
+  </insert>
+
+  <update id="update">
+    UPDATE sys_office SET
+      name = #{name},
+      title #{title},
+      remark = #{remark},
+      update_by = #{updateBy.id},
+      update_date = #{updateDate},
+      pid = #{pid},
+      sort = #{sort},
+      area_id = #{area.id},
+      code = #{code},
+      type = #{type},
+      address = #{address},
+      zip_code = #{zipCode},
+      master = #{master},
+      phone = #{phone},
+      email = #{email},
+      tax = #{tax}
+    WHERE id = #{id}
+  </update>
+
+  <update id="delete">
+    UPDATE sys_office SET
+    del_flag = #{DEL_FLAG_DELETE}
+    WHERE id = #{id}
+  </update>
+
+</mapper>

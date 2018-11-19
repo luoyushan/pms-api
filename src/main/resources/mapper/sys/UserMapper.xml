@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pms.api.sys.user.UserMapper" >
-  <sql id="userColumns" >
+  <sql id="columns" >
     a.id,
     a.name,
-    a.username,
-    a.password,
     a.title,
     a.remarks,
     a.create_by as "createBy.id",
     a.create_date ,
     a.update_by as "updateBy.id",
-    a.update_date
+    a.update_date,
+    a.dept_id as "dept.id",
+    a.username,
+    a.password,
+    a.no,
+    a.sex,
+    a.email,
+    a.phone,
+    a.mobile,
+    a.login_ip,
+    a.login_date,
+    a.login_flag,
+    a.del_flag,
+    a.photo
   </sql>
 
-  <sql id="userJoins">
-    join sys_user su on su.id = a.create_by
+  <sql id="joins">
+    left join sys_user su on su.id = a.create_by,
+    left join sys_office so1 on so.id = a.dept_id
   </sql>
 
   <select id="get" resultType="com.pms.api.sys.user.User">
     SELECT
-      <include refid="userColumns"/>
+      <include refid="columns"/>
     FROM sys_user a
+      <include refid="joins" />
     WHERE a.id = #{id}
   </select>
 
   <select id="findList" resultType="com.pms.api.sys.user.User" >
     SELECT
-    <include refid="userColumns" />
+    <include refid="columns" />
     FROM sys_user a
     <where>
       <if test="delFlag != null and delFlag != ''">
@@ -44,64 +57,79 @@
 
   <insert id="insert">
     INSERT INTO sys_user(
-    id,
-    name,
-    title,
-    remarks,
-    create_by,
-    create_date,
-    update_by,
-    update_date,
-    del_flag,
-    company_id,
-    dept_id,
-    username,
-    password,
-    no,
-    sex,
-    email,
-    phone,
-    mobile,
-    login_ip,
-    login_date,
-    login_flag,
-    photo
-    ) VALUES (
-    #{id},
-    #{name},
-    #{title},
-    #{remarks},
-    #{createBy.id},
-    #{createDate},
-    #{updateBy.id},
-    #{updateDate},
-    #{delFlag},
-    #{company.id},
-    #{dept.id},
-    #{username},
-    #{password},
-    #{no},
-    #{sex},
-    #{email},
-    #{phone},
-    #{mobile},
-    #{loginIp},
-    #{loginDate},
-    #{loginFlag},
-    #{photo}
+      id,
+      name,
+      title,
+      remarks,
+      create_by,
+      create_date,
+      update_by,
+      update_date,
+      del_flag,
+      dept_id,
+      username,
+      password,
+      no,
+      sex,
+      email,
+      phone,
+      mobile,
+      login_ip,
+      login_date,
+      login_flag,
+      photo
+      ) VALUES (
+      #{id},
+      #{name},
+      #{title},
+      #{remarks},
+      #{createBy.id},
+      #{createDate},
+      #{updateBy.id},
+      #{updateDate},
+      #{delFlag},
+      #{dept.id},
+      #{username},
+      #{password},
+      #{no},
+      #{sex},
+      #{email},
+      #{phone},
+      #{mobile},
+      #{loginIp},
+      #{loginDate},
+      #{loginFlag},
+      #{photo}
     )
   </insert>
 
   <update id="update">
     UPDATE sys_user SET
-    name = #{name},
-    title #{title},
-    remark = #{remark},
-    update_by = #{updateBy.id},
-    update_date = #{updateDate}
+      name = #{name},
+      title = #{title},
+      remark = #{remark},
+      update_by = #{updateBy.id},
+      update_date = #{updateDate},
+      dept_id = #{dept.id},
+      username = #{username},
+      password = #{password},
+      no = #{no},
+      sex = #{sex},
+      email = #{email},
+      phone = #{phone},
+      mobile = #{mobile},
+      login_ip = #{loginIp},
+      login_date = #{loginDate},
+      login_flag = #{loginFlag},
+      photo = #{photo}
     WHERE id = #{id}
   </update>
 
+  <update id="resetPassword">
+    UPDATE sys_user SET
+      password = #{password}
+    WHERE id = #{id}
+  </update>
   <update id="delete">
     UPDATE sys_user SET
     del_flag = #{DEL_FLAG_DELETE}
@@ -110,7 +138,7 @@
 
   <select id="getUserByUsername" resultType="com.pms.api.sys.user.User">
     SELECT
-    <include refid="userColumns"/>
+    <include refid="columns"/>
     FROM sys_user a
     WHERE a.username = #{username}
   </select>

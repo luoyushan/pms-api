@@ -1,7 +1,7 @@
 package com.pms.api.sys.office;
 
-
 import com.pms.api.common.persistence.Entity;
+import com.pms.api.sys.area.Area;
 
 public class Office extends Entity<Office> {
 
@@ -10,7 +10,7 @@ public class Office extends Entity<Office> {
   private String remarks;
   private String pid;
   private long sort;
-  private String areaId;
+  private Area area;
   private String code;
   private String type;
   private String address;
@@ -63,15 +63,13 @@ public class Office extends Entity<Office> {
     this.sort = sort;
   }
 
-
-  public String getAreaId() {
-    return areaId;
+  public Area getArea() {
+    return area;
   }
 
-  public void setAreaId(String areaId) {
-    this.areaId = areaId;
+  public void setArea(Area area) {
+    this.area = area;
   }
-
 
   public String getCode() {
     return code;
