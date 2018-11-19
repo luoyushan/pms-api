@@ -21,10 +21,6 @@ mybatis:
 logging:
   file: D:/log/log.log
 
-pms:
-  url: http://localhost:3000
-  apiurl: http://localhost:8000
-
 server:
   port: 8000
   servlet:
