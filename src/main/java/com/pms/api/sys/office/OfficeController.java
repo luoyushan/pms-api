@@ -13,16 +13,16 @@ public class OfficeController {
   }
 
   @ResponseBody
-  @PostMapping(value = { "list", "" })
-  public ResponseResult getRoles(@RequestBody Office office) {
+  @PostMapping(value = "list")
+  public ResponseResult findList(@RequestBody Office office) {
     ResponseResult result= ResponseResult.defaultSuccess();
     result.setData(service.findList(office));
     return result;
   }
 
   @ResponseBody
-  @GetMapping(value = "${id}")
-  public ResponseResult getRole(@PathVariable("id") String id) {
+  @GetMapping(value = "/{id}")
+  public ResponseResult get(@PathVariable("id") String id) {
     ResponseResult result= ResponseResult.defaultSuccess();
     result.setData(service.get(id));
     return result;

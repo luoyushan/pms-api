@@ -13,16 +13,16 @@ public class RoleController {
   }
 
   @ResponseBody
-  @PostMapping(value = { "list", "" })
-  public ResponseResult getRoles(@RequestBody Role role) {
+  @PostMapping(value = "list")
+  public ResponseResult findList(@RequestBody Role role) {
     ResponseResult result= ResponseResult.defaultSuccess();
     result.setData(service.findList(role));
     return result;
   }
 
   @ResponseBody
-  @GetMapping(value = "${id}")
-  public ResponseResult getRole(@PathVariable("id") String id) {
+  @GetMapping(value = "/{id}")
+  public ResponseResult get(@PathVariable("id") String id) {
     ResponseResult result= ResponseResult.defaultSuccess();
     result.setData(service.get(id));
     return result;
