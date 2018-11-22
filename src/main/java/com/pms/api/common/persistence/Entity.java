@@ -7,8 +7,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pms.api.sys.user.User;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public abstract class Entity<T> extends BaseEntity<T> {
+  private Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+
   protected String name;	// 名称
   protected String title;	// 标题
   protected String remarks;	// 备注
@@ -16,7 +22,7 @@ public abstract class Entity<T> extends BaseEntity<T> {
   protected Date createDate;	// 创建日期
   protected User updateBy;	// 更新者
   protected Date updateDate;	// 更新日期
-  protected String delFlag; 	// 删除标记（0：正常；1：删除；2：审核）
+  private String delFlag; 	// 删除标记（0：正常；1：删除；2：审核）
 
   public Entity() {
     super();
@@ -28,7 +34,7 @@ public abstract class Entity<T> extends BaseEntity<T> {
   }
 
 
-  public static String uuid() {
+  private static String uuid() {
     return UUID.randomUUID().toString().replaceAll("-", "");
   }
   /**
@@ -39,13 +45,15 @@ public abstract class Entity<T> extends BaseEntity<T> {
     if (!this.isNewRecord){
       setId(uuid());
     }
-    User user = this.getCurrentUser();
-    if (user != null && "".equals(user.getId())){
+    String name = this.getCurrentUserName();
+    if (name != null && "".equals(name)){
+      User user = new User();
+      user.setUsername(name);
       this.updateBy = user;
       this.createBy = user;
     } else {
-      this.updateBy = new User("1");
-      this.createBy = new User("1");
+      this.updateBy = new User();
+      this.createBy = new User();
     }
     this.updateDate = new Date();
     this.createDate = this.updateDate;
@@ -55,17 +63,25 @@ public abstract class Entity<T> extends BaseEntity<T> {
   /**
    * 更新之前执行方法，需要手动调用
    */
-  public void preUpdate(){
-    User user = this.getCurrentUser();
-    if (user != null && "".equals(user.getId())){
+  void preUpdate(){
+    String name = this.getCurrentUserName();
+    if (name != null && "".equals(name)){
+      User user = new User();
+      user.setUsername(name);
       this.updateBy = user;
+    } else {
+      this.updateBy = new User();
     }
     this.updateDate = new Date();
   }
 
-  private User getCurrentUser() {
-    return new User("1");
+  private String getCurrentUserName() {
+    if (!(authentication instanceof AnonymousAuthenticationToken)) {
+      return  authentication.getName();
+    }
+    return null;
   }
+
   @Length(min=0, max=255)
   public String getRemarks() {
     return remarks;

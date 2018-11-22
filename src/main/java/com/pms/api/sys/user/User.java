@@ -24,6 +24,7 @@ public class User extends Entity<User> {
   private String photo;	// 头像
   private String token;
   private List<String> roles; // 角色
+  private List<Role> roleList; // 角色
   public User() {
     super();
   }
@@ -53,6 +54,14 @@ public class User extends Entity<User> {
 
   public void setRoles(List<String> roles) {
     this.roles = roles;
+  }
+
+  public List<Role> getRoleList() {
+    return roleList;
+  }
+
+  public void setRoleList(List<Role> roleList) {
+    this.roleList = roleList;
   }
 
   public String getUsername() {

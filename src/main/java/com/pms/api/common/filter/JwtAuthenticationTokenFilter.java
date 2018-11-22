@@ -21,8 +21,8 @@ import java.io.IOException;
 /**
  * Token过滤器
  *
- * @author hackyo
- * Created on 2017/12/8 9:28.
+ * @author luoyu
+ * Created on 2018/11/22 9:28.
  */
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
@@ -31,7 +31,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
   private JwtTokenUtil jwtTokenUtil;
 
   @Autowired
-  public JwtAuthenticationTokenFilter(@Qualifier("jwtUserDetailsServiceImpl") UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil) {
+  public JwtAuthenticationTokenFilter(
+      @Qualifier("jwtUserDetailsServiceImpl")
+      UserDetailsService userDetailsService,
+      JwtTokenUtil jwtTokenUtil
+  ) {
     this.userDetailsService = userDetailsService;
     this.jwtTokenUtil = jwtTokenUtil;
   }

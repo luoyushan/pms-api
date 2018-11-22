@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@CacheConfig(cacheNames = {"myCache"})
+@CacheConfig(cacheNames = {"appCache"})
 @SpringBootApplication
 @EnableCaching
 @EnableTransactionManagement

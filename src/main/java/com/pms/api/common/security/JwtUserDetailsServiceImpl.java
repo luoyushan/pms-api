@@ -2,8 +2,6 @@ package com.pms.api.common.security;
 
 import com.pms.api.sys.user.User;
 import com.pms.api.sys.user.UserMapper;
-import com.pms.api.sys.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,8 +16,8 @@ import java.util.stream.Collectors;
 /**
  * 用户验证方法
  *
- * @author hackyo
- * Created on 2017/12/8 9:18.
+ * @author luoyu
+ * Created on 2018/11/22 9:28.
  */
 @Service
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
@@ -34,9 +32,6 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     User user = userMapper.getUserByUsername(username);
-    List<String> roles = new ArrayList<>();
-    roles.add("user");
-    user.setRoles(roles);
     if (user == null) {
       throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
     } else {

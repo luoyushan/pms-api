@@ -23,8 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /**
  * 安全模块配置
  *
- * @author hackyo
- * Created on 2017/12/8 9:15.
+ * @author luoyu
+ * Created on 2018/11/22 9:28
  */
 @Configuration
 @EnableWebSecurity
@@ -45,7 +45,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
   public WebSecurityConfig(
-      @Qualifier("jwtUserDetailsServiceImpl") UserDetailsService userDetailsService, JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter, EntryPointUnauthorizedHandler entryPointUnauthorizedHandler, RestAccessDeniedHandler restAccessDeniedHandler) {
+      @Qualifier("jwtUserDetailsServiceImpl")
+      UserDetailsService userDetailsService,
+      JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter,
+      EntryPointUnauthorizedHandler entryPointUnauthorizedHandler,
+      RestAccessDeniedHandler restAccessDeniedHandler
+  ) {
     this.userDetailsService = userDetailsService;
     this.jwtAuthenticationTokenFilter = jwtAuthenticationTokenFilter;
     this.entryPointUnauthorizedHandler = entryPointUnauthorizedHandler;

@@ -6,10 +6,10 @@
     a.name,
     a.title,
     a.remark,
-    a.create_by as "createBy.id",
-    a.create_date ,
-    a.update_by = "updateBy.id",
-    a.update_date,
+    a.create_by as "createBy.username",
+    a.create_date as "createDate" ,
+    a.update_by = "updateBy.username",
+    a.update_date as "updateDate",
   </sql>
 
   <sql id="userJoins">
@@ -56,9 +56,9 @@
     #{name},
     #{title},
     #{remark},
-    #{createBy.id},
+    #{createBy.username},
     #{createDate},
-    #{updateBy.id},
+    #{updateBy.username},
     #{updateDate},
     #{delFlag}
     )
@@ -69,7 +69,7 @@
     name = #{name},
     title #{title},
     remark = #{remark},
-    update_by = #{updateBy.id},
+    update_by = #{updateBy.username},
     update_date = #{updateDate}
     WHERE id = #{id}
   </update>

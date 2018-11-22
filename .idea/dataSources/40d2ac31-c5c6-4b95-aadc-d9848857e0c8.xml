@@ -102,8 +102,8 @@
       <Comment>standard public schema</Comment>
       <StateNumber>360</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionTimestamp>2018-11-18.13:17:10.299</IntrospectionTimestamp>
-      <IntrospectionStateNumber>634</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2018-11-21.20:00:52.506</IntrospectionTimestamp>
+      <IntrospectionStateNumber>660</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -1030,12 +1030,12 @@
       <ColNames>username</ColNames>
       <UnderlyingIndexName>sys_user_username_key</UnderlyingIndexName>
     </key>
-    <column id="146" parent="33" name="user_Id">
+    <column id="146" parent="33" name="user_id">
       <Position>1</Position>
       <Comment>用户ID</Comment>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>634</StateNumber>
+      <StateNumber>660</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="147" parent="33" name="role_id">

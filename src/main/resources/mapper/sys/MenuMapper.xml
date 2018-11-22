@@ -6,10 +6,10 @@
     a.name,
     a.title,
     a.remarks,
-    a.create_by as "createBy.id",
-    a.create_date ,
-    a.update_by as "updateBy.id",
-    a.update_date,
+    a.create_by as "createBy.username",
+    a.create_date as "createDate",
+    a.update_by as "updateBy.username",
+    a.update_date as "updateDate",
     a.pid,
     a.sort,
     a.href,
@@ -29,7 +29,7 @@
       <include refid="columns"/>,
       su1.name as "createBy.name",
       su2.name as "updateBy.name"
-    FROM sys_role a
+    FROM sys_menu a
       <include refid="joins"/>
     WHERE a.id = #{id}
   </select>
@@ -37,7 +37,7 @@
   <select id="findList" resultType="com.pms.api.sys.menu.Menu" >
     SELECT
       <include refid="columns" />
-    FROM sys_role a
+    FROM sys_menu a
     <where>
       <if test="delFlag != null and delFlag != ''">
         AND a.del_flag = #{delFlag}
@@ -52,7 +52,7 @@
   </select>
 
   <insert id="insert">
-    INSERT INTO sys_role(
+    INSERT INTO sys_menu(
       id,
       name,
       title,
@@ -74,9 +74,9 @@
       #{name},
       #{title},
       #{remark},
-      #{createBy.id},
+      #{createBy.username},
       #{createDate},
-      #{updateBy.id},
+      #{updateBy.username},
       #{updateDate},
       #{delFlag},
       #{pid},
@@ -90,11 +90,11 @@
   </insert>
 
   <update id="update">
-    UPDATE sys_role SET
+    UPDATE sys_menu SET
     name = #{name},
     title #{title},
     remark = #{remark},
-    update_by = #{updateBy.id},
+    update_by = #{updateBy.username},
     update_date = #{updateDate},
     pid = #{pid},
     sort = #{sort},
@@ -107,7 +107,7 @@
   </update>
 
   <update id="delete">
-    UPDATE sys_role SET
+    UPDATE sys_menu SET
     del_flag = #{DEL_FLAG_DELETE}
     WHERE id = #{id}
   </update>

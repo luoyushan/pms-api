@@ -3,15 +3,13 @@ package com.pms.api.common.security;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * 安全用户模型
  *
- * @author hackyo
- * Created on 2017/12/8 9:20.
+ * @author luoyu
+ * Created on 2018/11/22 9:28.
  */
 public class JwtUser implements UserDetails {
 
