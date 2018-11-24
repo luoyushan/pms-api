@@ -5,7 +5,7 @@
     a.id,
     a.name,
     a.title,
-    a.remark,
+    a.remarks,
     a.create_by as "createBy.username",
     a.create_date as "createDate" ,
     a.update_by = "updateBy.username",
@@ -45,7 +45,7 @@
     id,
     name,
     title,
-    remark,
+    remarks,
     create_by,
     create_date,
     update_by,
@@ -55,7 +55,7 @@
     #{id},
     #{name},
     #{title},
-    #{remark},
+    #{remarks},
     #{createBy.username},
     #{createDate},
     #{updateBy.username},
@@ -68,7 +68,7 @@
     UPDATE sys_user SET
     name = #{name},
     title #{title},
-    remark = #{remark},
+    remarks = #{remarks},
     update_by = #{updateBy.username},
     update_date = #{updateDate}
     WHERE id = #{id}

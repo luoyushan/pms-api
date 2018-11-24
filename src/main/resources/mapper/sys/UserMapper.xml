@@ -162,7 +162,7 @@
     UPDATE sys_user SET
       name = #{name},
       title = #{title},
-      remark = #{remark},
+      remarks = #{remarks},
       update_by = #{updateBy.username},
       update_date = #{updateDate},
       dept_id = #{dept.id},

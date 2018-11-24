@@ -1,6 +1,7 @@
 package com.pms.api.common.persistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -27,7 +28,9 @@ public abstract class BaseService<D extends BaseDao<T>, T extends Entity<T>> {
   /**
    * 查询列表数据
    */
+  @Cacheable(cacheNames = "entity",key = "#root.methodName+'['+#id+']'")
   public List<T> findList(T entity) {
+    System.out.println("执行===========》");
     return dao.findList(entity);
   }
 

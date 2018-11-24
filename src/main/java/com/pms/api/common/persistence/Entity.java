@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pms.api.common.security.JwtUser;
 import com.pms.api.sys.user.User;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -42,18 +43,18 @@ public abstract class Entity<T> extends BaseEntity<T> {
    */
   public void preInsert(){
     // 不限制ID为UUID，调用setIsNewRecord()使用自定义ID
-    if (!this.isNewRecord){
+    if (this.isNewRecord){
       setId(uuid());
     }
     String name = this.getCurrentUserName();
-    if (name != null && "".equals(name)){
+    if (name != null && !"".equals(name)){
       User user = new User();
       user.setUsername(name);
       this.updateBy = user;
       this.createBy = user;
     } else {
-      this.updateBy = new User();
-      this.createBy = new User();
+      this.updateBy = new User("1");
+      this.createBy = new User("1");
     }
     this.updateDate = new Date();
     this.createDate = this.updateDate;
@@ -77,9 +78,9 @@ public abstract class Entity<T> extends BaseEntity<T> {
 
   private String getCurrentUserName() {
     if (!(authentication instanceof AnonymousAuthenticationToken)) {
-      return  authentication.getName();
+      return ((JwtUser)authentication.getPrincipal()).getUsername();
     }
-    return null;
+    return "1";
   }
 
   @Length(min=0, max=255)
