@@ -1,9 +1,9 @@
 package com.pms.api.sys.office;
 
-import com.pms.api.common.persistence.Entity;
+import com.pms.api.common.persistence.BaseEntity;
 import com.pms.api.sys.area.Area;
 
-public class Office extends Entity<Office> {
+public class Office extends BaseEntity<Office> {
 
   private String name;
   private String title;

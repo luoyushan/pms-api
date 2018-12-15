@@ -1,9 +1,9 @@
 package com.pms.api.sys.role;
 
-import com.pms.api.common.persistence.BaseDao;
-import org.springframework.stereotype.Repository;
+import com.pms.api.common.persistence.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
-@Repository
-public interface RoleMapper extends BaseDao<Role> {
+@Mapper
+public interface RoleMapper extends BaseMapper<Role> {
 
 }

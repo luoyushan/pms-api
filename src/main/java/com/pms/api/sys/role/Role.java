@@ -1,8 +1,8 @@
 package com.pms.api.sys.role;
 
-import com.pms.api.common.persistence.Entity;
+import com.pms.api.common.persistence.BaseEntity;
 
-public class Role extends Entity<Role> {
+public class Role extends BaseEntity<Role> {
 
   private String name;
   private String title;

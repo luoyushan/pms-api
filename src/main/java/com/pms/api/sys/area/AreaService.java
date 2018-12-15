@@ -1,20 +1,31 @@
 package com.pms.api.sys.area;
 
 import com.pms.api.common.persistence.BaseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
-public class AreaService extends BaseService<AreaMapper, Area> {
+public class AreaService implements BaseService<Area> {
 
-  @Autowired
-  AreaService(AreaMapper mapper) {
+
+  @Override
+  public Area get(String id) {
+    return null;
   }
 
-  @Transactional(readOnly = false)
-  public void save(Area area) {
-    area.setNewRecord(true);
-    super.save(area);
+  @Override
+  public List<Area> findList(Area entity) {
+    return null;
+  }
+
+  @Override
+  public void save(Area entity) {
+
+  }
+
+  @Override
+  public void delete(String id) {
+
   }
 }

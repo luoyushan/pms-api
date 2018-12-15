@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class Page<T> implements IPage {
+@SuppressWarnings("FieldCanBeLocal")
+public class Page<T> {
   private int pageNo = 1; // 当前页码
   private int pageSize = Integer.valueOf(Global.getConfig("pageSize")); // 页面大小，设置为“-1”表示不进行分页（分页无效）
 

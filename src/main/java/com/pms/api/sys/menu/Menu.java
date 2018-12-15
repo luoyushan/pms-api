@@ -1,9 +1,9 @@
 package com.pms.api.sys.menu;
 
 
-import com.pms.api.common.persistence.Entity;
+import com.pms.api.common.persistence.BaseEntity;
 
-public class Menu extends Entity<Menu> {
+public class Menu extends BaseEntity<Menu> {
   private String name;
   private String title;
   private String remarks;

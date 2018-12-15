@@ -1,9 +1,9 @@
 package com.pms.api.sys.area;
 
-import com.pms.api.common.persistence.BaseDao;
-import org.springframework.stereotype.Repository;
+import com.pms.api.common.persistence.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
-@Repository
-public interface AreaMapper extends BaseDao<Area> {
+@Mapper
+public interface AreaMapper extends BaseMapper<Area> {
 
 }

@@ -1,13 +1,30 @@
 package com.pms.api.sys.role;
 
 import com.pms.api.common.persistence.BaseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class RoleService extends BaseService<RoleMapper, Role> {
+import java.util.List;
 
-  @Autowired
-  RoleService(RoleMapper mapper) {
+@Service
+public class RoleService implements BaseService<Role> {
+
+  @Override
+  public Role get(String id) {
+    return null;
+  }
+
+  @Override
+  public List<Role> findList(Role entity) {
+    return null;
+  }
+
+  @Override
+  public void save(Role entity) {
+
+  }
+
+  @Override
+  public void delete(String id) {
+
   }
 }

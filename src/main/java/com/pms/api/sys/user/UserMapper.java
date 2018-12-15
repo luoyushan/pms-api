@@ -1,11 +1,11 @@
 package com.pms.api.sys.user;
 
-import com.pms.api.common.persistence.BaseDao;
+import com.pms.api.common.persistence.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserMapper extends BaseDao<User> {
+@Mapper
+public interface UserMapper extends BaseMapper<User> {
   User getUserByUsername(@Param("username") String username);
 
   void resetPassword(User user);

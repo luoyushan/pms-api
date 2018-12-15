@@ -14,11 +14,13 @@ spring:
 
   cache:
     type: redis
-  # 本地缓存
+    redis:
+      use-key-prefix: true
+      time-to-live: 20000
+      cache-null-values: false
   redis:
     host: 127.0.0.1
     port: 6379
-    password: 675509
     timeout: 500
     jedis:
       pool:
@@ -32,6 +34,7 @@ mybatis:
   type-aliases-package: com.pms.api.*
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
 
 #debug: true
 logging:

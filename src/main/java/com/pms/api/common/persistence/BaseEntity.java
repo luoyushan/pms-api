@@ -1,47 +1,54 @@
 package com.pms.api.common.persistence;
 
 import com.pms.Global;
+import com.pms.api.sys.user.User;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
+@SuppressWarnings("WeakerAccess")
 public class BaseEntity<T> implements Serializable {
-  private static final Long serialVersionUID = 1L;
 
-  /**
-   * 实体编号（唯一标识）
-   */
+  // 删除标记（0：正常；1：删除；2：审核；）
+  public static final String DEL_FLAG_NORMAL = "0";
+  public static final String DEL_FLAG_DELETE = "1";
+  public static final String DEL_FLAG_AUDIT = "2";
+
+  protected static final Long serialVersionUID = 1L;
   protected String id;
-
-  /**
-   * 当前实体分页对象
-   */
-  protected Page<T> page;
-
-  /**
-   * 自定义SQL（SQL标识，SQL内容）
-   */
-  protected Map<String, String> sqlMap;
-
-  /**
-   * 是否是新记录（默认：false），调用setIsNewRecord()设置新记录，使用自定义ID。
-   * 设置为true后强制执行插入语句，ID不会自动生成，需从手动传入。
-   */
-  protected boolean isNewRecord = false;
-
-  /**
-   * 全局变量对象
-   */
-  public Global getGlobal() {
-    return Global.getGlob();
-  }
-
-  public BaseEntity() {
-  }
+  protected String name;	// 名称
+  protected String remarks;	// 备注
+  protected User createBy;	// 创建者
+  protected Date createDate;	// 创建日期
+  protected User updateBy;	// 更新者
+  protected Date updateDate;	// 更新日期
+  private String delFlag; 	// 删除标记（0：正常；1：删除；2：审核）
 
   public BaseEntity(String id) {
     this();
     this.id = id;
+  }
+
+  public BaseEntity() {
+
+  }
+
+  private static String uuid() {
+    return UUID.randomUUID().toString().replaceAll("-", "");
+  }
+  /**
+   * 插入之前执行方法，需要手动调用
+   */
+  public void preInsert(){
+    setId(uuid());
+  }
+
+  /**
+   * 更新之前执行方法，需要手动调用
+   */
+  public void preUpdate(){
   }
 
   @Override
@@ -70,34 +77,59 @@ public class BaseEntity<T> implements Serializable {
     this.id = id;
   }
 
-  public Page<T> getPage() {
-    return page;
+  public String getName() {
+    return name;
   }
 
-  public void setPage(Page<T> page) {
-    this.page = page;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public Map<String, String> getSqlMap() {
-    return sqlMap;
+  public String getRemarks() {
+    return remarks;
   }
 
-  public void setSqlMap(Map<String, String> sqlMap) {
-    this.sqlMap = sqlMap;
+  public void setRemarks(String remarks) {
+    this.remarks = remarks;
   }
 
-  public boolean isNewRecord() {
-    return isNewRecord;
+  public User getCreateBy() {
+    return createBy;
   }
 
-  public void setNewRecord(boolean newRecord) {
-    isNewRecord = newRecord;
+  public void setCreateBy(User createBy) {
+    this.createBy = createBy;
   }
 
-  /**
-   * 删除标记（0：正常；1：删除；2：审核；）
-   */
-  public static final String DEL_FLAG_NORMAL = "0";
-  public static final String DEL_FLAG_DELETE = "1";
-  public static final String DEL_FLAG_AUDIT = "2";
+  public Date getCreateDate() {
+    return createDate;
+  }
+
+  public void setCreateDate(Date createDate) {
+    this.createDate = createDate;
+  }
+
+  public User getUpdateBy() {
+    return updateBy;
+  }
+
+  public void setUpdateBy(User updateBy) {
+    this.updateBy = updateBy;
+  }
+
+  public Date getUpdateDate() {
+    return updateDate;
+  }
+
+  public void setUpdateDate(Date updateDate) {
+    this.updateDate = updateDate;
+  }
+
+  public String getDelFlag() {
+    return delFlag;
+  }
+
+  public void setDelFlag(String delFlag) {
+    this.delFlag = delFlag;
+  }
 }

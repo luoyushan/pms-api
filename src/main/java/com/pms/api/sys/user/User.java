@@ -1,13 +1,12 @@
 package com.pms.api.sys.user;
 
-import com.pms.api.common.persistence.Entity;
+import com.pms.api.common.persistence.BaseEntity;
 import com.pms.api.sys.office.Office;
 import com.pms.api.sys.role.Role;
-
 import java.util.Date;
 import java.util.List;
 
-public class User extends Entity<User> {
+public class User extends BaseEntity<User> {
 
   private String username;// 登录名
   private String password;// 密码
@@ -25,6 +24,7 @@ public class User extends Entity<User> {
   private String token;
   private List<String> roles; // 角色
   private List<Role> roleList; // 角色
+
   public User() {
     super();
   }

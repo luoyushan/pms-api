@@ -13,39 +13,39 @@ public class ResponseResult {
 	private final static String INVALID_MESSAGE = "登陆过期";
 	private final static String ERROR_PARAM_MESSAGE = "请求参数错误";
 
-	private String replyCode; // 返回的状态代码
-	private String replyMsg; // 返回的信息描述
+	private String code; // 返回的状态代码
+	private String message; // 返回的信息描述
 	private Object data; // 返回的数据信息
 
 	private ResponseResult() {
 	}
-	private ResponseResult(String replyCode, String replyMsg) {
+	private ResponseResult(String code, String message) {
 		super();
-		this.replyCode = replyCode;
-		this.replyMsg = replyMsg;
+		this.code = code;
+		this.message = message;
 	}
 
-	public ResponseResult(String replyCode, String replyMsg, Object data) {
+	public ResponseResult(String code, String message, Object data) {
 		super();
-		this.replyCode = replyCode;
-		this.replyMsg = replyMsg;
+		this.code = code;
+		this.message = message;
 		this.setData(data);
 	}
 
-	public String getReplyCode() {
-		return replyCode;
+	public String getCode() {
+		return code;
 	}
 
-	private void setReplyCode(String replyCode) {
-		this.replyCode = replyCode;
+	private void setCode(String code) {
+		this.code = code;
 	}
 
-	public String getReplyMsg() {
-		return replyMsg;
+	public String getMessage() {
+		return message;
 	}
 
-	private void setReplyMsg(String replyMsg) {
-		this.replyMsg = replyMsg;
+	private void setMessage(String message) {
+		this.message = message;
 	}
 
 	public static ResponseResult defaultSuccess() {
@@ -114,31 +114,31 @@ public class ResponseResult {
 	 */
 	public static ResponseResult result(String errCode, Map<String, Object> data) {
 		ResponseResult result = new ResponseResult();
-		result.setReplyCode(errCode);
+		result.setCode(errCode);
 		switch (errCode) {
 			case "0":
-				result.setReplyMsg("操作成功");
+				result.setMessage("操作成功");
 				if (data != null) {
 					result.setData(data);
 				}
 				break;
 			case "1001":
-				result.setReplyMsg("请求传参错误");
+				result.setMessage("请求传参错误");
 				break;
 			case "1002":
-				result.setReplyMsg("没有对应内容");
+				result.setMessage("没有对应内容");
 				break;
 			case "1003":
-				result.setReplyMsg("此用户已存在");
+				result.setMessage("此用户已存在");
 				break;
 			case "1004":
-				result.setReplyMsg("上传文件为空");
+				result.setMessage("上传文件为空");
 				break;
 			case "404":
-				result.setReplyMsg("异常抛出错误");
+				result.setMessage("异常抛出错误");
 				break;
 			default:
-				result.setReplyMsg("未知错误");
+				result.setMessage("未知错误");
 				break;
 		}
 		return result;

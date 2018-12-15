@@ -1,9 +1,9 @@
 package com.pms.api.sys.menu;
 
-import com.pms.api.common.persistence.BaseDao;
-import org.springframework.stereotype.Repository;
+import com.pms.api.common.persistence.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
-@Repository
-public interface MenuMapper extends BaseDao<Menu> {
+@Mapper
+public interface MenuMapper extends BaseMapper<Menu> {
 
 }

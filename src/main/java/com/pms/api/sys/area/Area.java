@@ -1,12 +1,10 @@
 package com.pms.api.sys.area;
 
 
-import com.pms.api.common.persistence.Entity;
+import com.pms.api.common.persistence.BaseEntity;
 
-public class Area extends Entity<Area> {
-  private String name;
+public class Area extends BaseEntity<Area> {
   private String title;
-  private String remarks;
   private String pid;
   private String code;
   private String type;
@@ -19,7 +17,6 @@ public class Area extends Entity<Area> {
   public void setName(String name) {
     this.name = name;
   }
-
 
   public String getTitle() {
     return title;
